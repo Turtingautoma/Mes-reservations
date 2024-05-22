@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Reservations</title>
+<style>
+  body {
+    font-family: Arial, sans-serif;
+    padding: 1px;
+    background-color: #f4f4f4;
+  }
+  h1 {
+    margin-top: 5px;
+    font-size: 35px;
+    margin-bottom: 10px; /* Ajoutez un peu d'espace au-dessous du h1 si nécessaire */
+}
+  .container {
+    max-width: 600px;
+    margin: auto;
+    background: white;
+    padding-top: 20px;
+    padding-left: 20px;
+    padding-right: 20px;
+    padding-bottom: 10px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    border-radius: 18px;
+  }
+  input {
+    width: 96%;
+    height: 50px;
+    padding: 10px;
+    margin: 10px 0;
+    border-radius: 8px;
+    border: 1px solid #ccc;
+    font-size: large;
+    align-content: center;
+  }
+  button {
+    width: 100%;
+    padding: 10px;
+    margin: 10px 0;
+    height: 50px;
+    border-radius: 8px;
+    background-color: #5935e6;
+    color: white;
+    font-size: 16px;
+    cursor: pointer;
+    border: none;
+  }
+  button:hover {
+    background-color: #5835e6a1;
+  }
+  @media (max-width: 480px){
+    .container {
+    max-width: 600px;
+    margin: auto;
+    background: white;
+    padding-top: 10px;
+    padding-left: 10px;
+    padding-right: 10px;
+    padding-bottom: 3px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    border-radius: 18px;
+  }
+  input {
+    width: 93%;
+    height: 50px;
+    padding: 10px;
+    margin: 10px 0;
+    border-radius: 8px;
+    border: none;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+  }
+  button {
+    width: 100%;
+    padding: 10px;
+    margin: 10px 0;
+    height: 50px;
+    border-radius: 8px;
+    background-color: #5935e6;
+    color: white;
+    font-size: 16px;
+    cursor: pointer;
+    border: none;
+  }
+}
+</style>
+</head>
+<body>
+<div class="container">
+  <h1>Consultez vos réservations</h1>
+  <label for="date">Sélectionnez une date:</label>
+  <input type="date" id="date" name="date">
+  <button onclick="sendData()">Voir mes réservations</button>
+  <div id="responseContainer"></div>
+</div>
+
+<div id="responseContainer"></div>
+
+<script>
+  function sendData() {
+    var date = document.getElementById('date').value;
+    if (date) {
+      var xhr = new XMLHttpRequest();
+      xhr.open("POST", "https://hook.eu2.make.com/uhflgyem3mcxip3jcu7v9nphbedygq1i", true);
+      xhr.setRequestHeader('Content-Type', 'application/json');
+      xhr.send(JSON.stringify({ date: date }));
+
+      xhr.onload = function() {
+        if (xhr.status >= 200 && xhr.status < 300) {
+          document.getElementById('responseContainer').innerHTML = xhr.responseText;
+        } else {
+          console.error('Erreur de requête');
+        }
+      };
+    } else {
+      alert('Veuillez choisir une date.');
+    }
+}
+
+</script>
+</body>
+</html>
